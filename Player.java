@@ -48,9 +48,9 @@ class Entity {
 class Player {
     public static void main(String args[]) {
         Scanner cin  = new Scanner(System.in);
-		int teamId; // # of busters * player ; 
-		int ghostCount; //# of ghosts in map;
-		int bustersPP; //player 0 or 1;
+		int teamId; // # of busters * player
+		int ghostCount; //# of ghosts in map
+		int bustersPP; //player 0 or 1
 		bustersPP = cin.nextInt();
 		ghostCount = cin.nextInt();
 		teamId = cin.nextInt();
@@ -73,6 +73,7 @@ class Player {
 			Entity temp = new Entity ();
 			int entN;
 			entN = cin.nextInt();
+			//input
 			for (int i = 0;i < entN;i++){
 				temp.id=cin.nextInt();
 				temp.x=cin.nextInt();
@@ -88,6 +89,10 @@ class Player {
 					ghosts++;
 				}
 			}
+			/*debug*/
+			System.err.printf("# busters:%d\n#ghosts:%d",busters,ghosts);
+			/*debug*/
+			//operations
 			for (Entity element:buster){
 				if (element.state==1){
 					if (element.entDist(base)<1600){
@@ -97,18 +102,18 @@ class Player {
 					}
 				}
 				boolean found=false;
-		    		for (Entity coso:ghost){
-		    			if (coso.value!=0){ continue;}
-			    		int dist = element.entDist(coso);
-			    		if (dist<1760){
-			    			System.out.printf("BUST %d",coso.id);
-				    		found=true;
-				    	}else if (dist<2200){
-				    		System.out.printf("MOVE %d %d",coso.x,coso.y);
-				    		System.err.printf("%d %d",coso.id,dist);
-				    		found=true;
-				    	}
-				    }
+		    	for (Entity coso:ghost){
+		    		if (coso.value!=0){ continue;}
+					int dist = element.entDist(coso);
+					if (dist<1760){
+			    		System.out.printf("BUST %d",coso.id);
+				    	found=true;
+				    }else if (dist<2200){
+				    	System.out.printf("MOVE %d %d",coso.x,coso.y);
+				    	System.err.printf("%d %d",coso.id,dist);
+				    	found=true;
+					}
+				}
 				if (!found){
 					System.out.printf("MOVE %d %d",dest.x,dest.y);
 				}
@@ -116,4 +121,3 @@ class Player {
 		}
 	}
 }
-
