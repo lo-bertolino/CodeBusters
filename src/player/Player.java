@@ -1,4 +1,4 @@
-package player;
+//package player;
 import java.util.*;
 
 class Entity {
@@ -22,14 +22,6 @@ class Entity {
 		this.x=x;
 		this.y=y;
 	}
-	public Entity (int id, int x, int y, int type, int state, int value){
-		this.id = id;
-		this.x = x;
-		this.y = y;
-		this.type = type;
-		this.state = state;
-		this.value = value;
-	}
 	public int  entDist (Entity b){
 		return (int) Math.sqrt((this.x - b.x)*(this.x-b.x)+(this.y-b.y)*(this.y-b.y));
 	}
@@ -47,7 +39,7 @@ class Entity {
 }
 
 class Player {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Scanner cin  = new Scanner(System.in);
 		int teamId; // # of busters * player
 		int ghostCount; //# of ghosts in map
@@ -55,7 +47,7 @@ class Player {
 		bustersPP = cin.nextInt();
 		ghostCount = cin.nextInt();
 		teamId = cin.nextInt();
-		System.err.printf("%d %d %d ",bustersPP,ghostCount,teamId);
+		System.err.printf("%d %d %d\n",bustersPP,ghostCount,teamId);
 		Entity base,dest;
 		if (teamId==0){
 			base = new Entity(0,0);
@@ -91,32 +83,32 @@ class Player {
 				}
 			}
 			/*debug*/
-			System.err.printf("# busters:%d\n#ghosts:%d",busters,ghosts);
+			System.err.printf("# busters:%d\n# ghosts:%d\n",busters,ghosts);
 			/*debug*/
 			//operations
-			for (Entity element:buster){
-				if (element.state==1){
-					if (element.entDist(base)<1600){
-						System.out.println("RELEASE");
+			for (int i = 0;i < busters;i++){
+				if (buster[i].state==1){
+					if (buster[i].entDist(base)<1600){
+						System.out.println("RELEASE\n");
 					}else{
-						System.out.printf("MOVE %d %d",base.x,base.y);
+						System.out.printf("MOVE %d %d\n",base.x,base.y);
 					}
 				}
 				boolean found=false;
-		    	for (Entity coso:ghost){
-		    		if (coso.value!=0){ continue;}
-					int dist = element.entDist(coso);
+		    	for (int j = 0;j < ghosts;j++){
+		    		if (ghost[j].value!=0){ continue;}
+					int dist = buster[i].entDist(ghost[j]);
 					if (dist<1760){
-			    		System.out.printf("BUST %d",coso.id);
+			    		System.out.printf("BUST %d\n",ghost[j].id);
 				    	found=true;
 				    }else if (dist<2200){
-				    	System.out.printf("MOVE %d %d",coso.x,coso.y);
-				    	System.err.printf("%d %d",coso.id,dist);
+				    	System.out.printf("MOVE %d %d\n",ghost[j].x,ghost[j].y);
+				    	System.err.printf("%d %d\n",ghost[j].id,dist);
 				    	found=true;
 					}
 				}
 				if (!found){
-					System.out.printf("MOVE %d %d",dest.x,dest.y);
+					System.out.printf("MOVE %d %d\n",dest.x,dest.y);
 				}
 			}
 		}
