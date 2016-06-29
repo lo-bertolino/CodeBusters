@@ -9,6 +9,7 @@ using namespace std;
 //id,x,y,type,state,value
 class Entity {
 	public:
+		static int teamId;
 		int id;
 		int x;
 		int y;
