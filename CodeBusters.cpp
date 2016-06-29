@@ -8,30 +8,50 @@ using namespace std;
 
 //id,x,y,type,state,value
 class Entity {
-	public:
-		static int teamId;
-		int id;
-		int x;
-		int y;
-		int type;
-		int state;
-		int value;
-		int entDist(Entity * b){
-			return sqrt((this->x - b->x)*(this->x-b->x)+(this->y-b->y)*(this->y-b->y));
+public:
+    static int teamId;
+    int id;
+	int x;
+	int y;
+	int type;
+	int state;
+	int value;
+	Entity (int a, int b):x(a),y(b){}
+	Entity () {}
+    Entity (Entity copied) {
+        this.id = copied.id;
+		this.x = copied.x;
+		this.y = copied.y;
+		this.type = copied.type;
+		this.state = copied.state;
+		this.value = copied.value;
+    }
+    int entDist(Entity * b){
+		return sqrt((this->x - b->x)*(this->x-b->x)+(this->y-b->y)*(this->y-b->y));
+	}
+	void print(){
+        if (this->type==teamId){
+			cerr<<"My buster is "<<this->id<<" and is in "<<this->x<<" "<<this.y<<",";
+			if (this->state==1){
+				cerr<<"this buster is carrying ghost #"<<this->value<<endl;
+			}else{
+				cerr<<"this buster isn't carrying any ghost"<<endl;
+			}
+		}else{
+			cerr<<"This ghost is #"this->id<<" and is in "<<this->x<<" "<<this.y<<",";
+			if (this.value!=0){
+				cerr<<"This ghost is currently targeted by "<<this->value<<" buster(s)"<<endl;
+			}
 		}
-		void print(){
-			cerr<<this->id<<" "<<this->x<<" "<<this->y<<" "<<this->type<<" "<<this->state<<" "<<this->value<<endl;
-		}
-		Entity (int a, int b):x(a),y(b){}
-		Entity () {}
-		void copy (Entity copied) {
-			this->id=copied.id;
-			this->x=copied.x;
-			this->y=copied.y;
-			this->type=copied.type;
-			this->state=copied.state;
-			this->value=copied.value;
-		}
+	}
+	void copy (Entity copied) {
+		this->id=copied.id;
+		this->x=copied.x;
+		this->y=copied.y;
+		this->type=copied.type;
+		this->state=copied.state;
+		this->value=copied.value;
+        }
 };
 
 int main(){
@@ -63,7 +83,7 @@ int main(){
 			else ghost.push_back(*temp);
         }
 		
-        for (int i = 0; i < buster.size(); i++) {
+        for (int i = 0; i < bustersPP; i++) {
 			if(buster[i].state==1){
 				if(buster[i].entDist(base)<1600)
 					cout<<"RELEASE"<<endl;
@@ -71,7 +91,7 @@ int main(){
 					cout<<"MOVE "<<base.x<<" "<<base.y<<endl;
 			}
 			bool found=false;
-			for (int j=0;j<ghost.size()||found;j++){
+			for (int j=0;j<ghostCount||found;j++){
 				if(ghost[i].value!=0) continue;
 				int dist = buster[i].entDist(ghost[j])
 				if (dist<1760){
