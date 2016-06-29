@@ -62,7 +62,7 @@ int main(){
 			else ghost.push_back(*temp);
         }
 		
-        for (int i = 0; i < bustersPP; i++) {
+        for (int i = 0; i < buster.size(); i++) {
 			if(buster[i].state==1){
 				if(buster[i].entDist(base)<1600)
 					cout<<"RELEASE"<<endl;
@@ -70,7 +70,7 @@ int main(){
 					cout<<"MOVE "<<base.x<<" "<<base.y<<endl;
 			}
 			bool found=false;
-			for (int j=0;j<ghostCount||found;j++){
+			for (int j=0;j<ghost.size()||found;j++){
 				if(ghost[i].value!=0) continue;
 				int dist = buster[i].entDist(ghost[j])
 				if (dist<1760){
