@@ -32,7 +32,7 @@ class Entity {
 	}
 	public void print(){
 		if (this.type==teamId){
-			System.err.printf("My buster is #d and is in %d %d,",type,this.id,this.x,this.y);
+			System.err.printf("My buster is #d and is in %d %d,",this.id,this.x,this.y);
 			if (this.state==1){
 				System.err.printf("this buster is carrying ghost #%d\n",this.value);
 			}else{
@@ -126,7 +126,7 @@ class Player {
 							System.out.printf("BUST %d\n",ghost[j].id);
 					    	found=true;
 					    }else if (dist<2200){
-					    	System.out.printf("MOVE %d %d, %d found\n",ghost[j].x,ghost[j].y,ghost[j].value);
+					    	System.out.printf("MOVE %d %d %d found\n",ghost[j].x,ghost[j].y,ghost[j].value);
 					    	found=true;
 						}
 					}

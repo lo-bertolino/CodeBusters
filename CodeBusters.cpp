@@ -97,9 +97,9 @@ int main(){
  		for (int i = 0;i < busters;i++){
 			if (buster[i].state==1){
 				if (buster[i].entDist(base)<1600){
-					cerr<<"RELEASE"<<endl;
+					cout<<"RELEASE"<<endl;
 				}else{
-					cerr<<"MOVE "<<base.x<<" "<<base.y<<" home " << buster[i].value<<endl;
+					cout<<"MOVE "<<base.x<<" "<<base.y<<" home " << buster[i].value<<endl;
 				}
 			}
 			else{
@@ -108,15 +108,15 @@ int main(){
 					if (ghost[j].value!=0){continue;}
 					int dist = buster[i].entDist(ghost[j]);
 					if (dist<1760){
-						System.out.printf("BUST %d\n",ghost[j].id);
+						cout<<"BUST "<<ghost[j].id<<endl;
 				    	found=true;
 				    }else if (dist<2200){
-				    	System.out.printf("MOVE %d %d, %d found\n",ghost[j].x,ghost[j].y,ghost[j].value);
+				    	cout<<"MOVE "<<ghost[j].x<<" "<<ghost[j].y<<", "ghost[j].value" found"<<endl;
 				    	found=true;
 					}
 				}
 				if (!found){
-					System.out.printf("MOVE %d %d nobody\n",dest.x,dest.y);
+					cout<<"MOVE %d %d nobody\n",dest.x,dest.y<<endl;
 				}
 			}
 		}
