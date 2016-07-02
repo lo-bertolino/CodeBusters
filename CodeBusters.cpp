@@ -18,29 +18,29 @@ public:
 	int value;
 	Entity (int a, int b):x(a),y(b){}
 	Entity () {}
-    Entity (Entity copied) {
-        this.id = copied.id;
-		this.x = copied.x;
-		this.y = copied.y;
-		this.type = copied.type;
-		this.state = copied.state;
-		this.value = copied.value;
+    Entity (Entity * copied) {
+        this->id = copied->id;
+		this->x = copied->x;
+		this->y = copied->y;
+		this->type = copied->type;
+		this->state = copied->state;
+		this->value = copied->value;
     }
     int entDist(Entity b){
 		return sqrt((this->x - b.x)*(this->x-b.x)+(this->y-b.y)*(this->y-b.y));
 	}
 	void print(){
-        if (this->type==teamId){
-			cerr<<"My buster is "<<this->id<<" and is in "<<this->x<<" "<<this.y<<",";
+        if (this->type==this->teamId){
+			cerr<<"Buster #"<<this->id<<" in "<<this->x<<", "<<this->y<<";";
 			if (this->state==1){
-				cerr<<"this buster is carrying ghost #"<<this->value<<endl;
+				cerr<<" carrying ghost #"<<this->value<<endl;
 			}else{
-				cerr<<"this buster isn't carrying any ghost"<<endl;
+				cerr<<" not carrying ghosts"<<endl;
 			}
 		}else{
-			cerr<<"This ghost is #"this->id<<" and is in "<<this->x<<" "<<this.y<<",";
-			if (this.value!=0){
-				cerr<<"This ghost is currently targeted by "<<this->value<<" buster(s)"<<endl;
+			cerr<<"Ghost #"<<this->id<<" in "<<this->x<<", "<<this->y<<";";
+			if (this->value!=0){
+				cerr<<" currently targeted by "<<this->value<<" busters"<<endl;
 			}
 		}
 	}
@@ -53,14 +53,15 @@ public:
 		this->value=copied.value;
         }
 };
-
+int Entity::teamId;
 int main(){
-    int bustersPP,ghostCount; // # of busters * player ; # of ghosts in map; player 0 or 1;
-    cin >> bustersPP >> ghostCount >> Entity.teamId; cin.ignore();
-    cerr<<bustersPP<<" "<<ghostCount<<" "<<Entity.teamId<<endl;
+    int bustersPP,ghostCount,teamId; // # of busters * player ; # of ghosts in map; player 0 or 1;
+    cin >> bustersPP >> ghostCount >> teamId; cin.ignore();
+    cerr<<bustersPP<<" "<<ghostCount<<" "<<teamId<<endl;
 	int baseX,baseY,destX,destY;//assign base and (first try) direction
 	Entity base,dest;
-	if (Entity.teamId==0){
+	Entity::teamId=teamId;
+	if (teamId==0){
 		base = new Entity (0,0);
 		dest = new Entity (16001,9001);
 	}else{
@@ -78,7 +79,7 @@ int main(){
         //input
         for (int i = 0; i < entN; i++){
             cin>>temp.id>>temp.x>>temp.y>>temp.type>>temp.state>>temp.value;cin.ignore();
-			if (temp.type==Entity.teamId) buster[busters]=new Entity(temp);
+			if (temp.type==teamId) buster[busters]=new Entity(temp);
             else if(temp.type==-1) ghost[ghosts]=new Entity(temp);
             
         }
@@ -87,7 +88,7 @@ int main(){
 		for (int i = 0;i < busters;i++){
 			buster[i].print();
 		}
-		cerr<<"# ghosts:"ghosts<<endl;
+		cerr<<"# ghosts:"<<ghosts<<endl;
 		for (int i = 0;i < ghosts;i++){
 			ghost[i].print();
 		}
@@ -111,12 +112,12 @@ int main(){
 						cout<<"BUST "<<ghost[j].id<<endl;
 				    	found=true;
 				    }else if (dist<2200){
-				    	cout<<"MOVE "<<ghost[j].x<<" "<<ghost[j].y<<", "ghost[j].value" found"<<endl;
+				    	cout<<"MOVE "<<ghost[j].x<<" "<<ghost[j].y<<", "<<ghost[j].value<<" found"<<endl;
 				    	found=true;
 					}
 				}
 				if (!found){
-					cout<<"MOVE %d %d nobody\n",dest.x,dest.y<<endl;
+					cout<<"MOVE "<<dest.x<<" "<<dest.y<<" nobody"<<endl;
 				}
 			}
 		}
